@@ -1,4 +1,4 @@
-<div id="home-container">
+<div id="home-container" *ngIf="game">
   <div class="m-1 m-sm-3">
     <div
       class="game-container container-fluid mx-auto rounded rounded-2 p-2 border border-2 border-dark"
@@ -38,7 +38,7 @@
           ></app-turn>
         </div>
         <div class="col-12">
-          <app-total [total]="game.total"></app-total>
+          <app-total [total]="total"></app-total>
         </div>
       </div>
     </div>

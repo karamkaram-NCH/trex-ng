@@ -9,6 +9,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+* {
+  user-select: none;
+}
+
 .pointer {
   cursor: pointer;
 }

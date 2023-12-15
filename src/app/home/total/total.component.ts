@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RowValueInterface } from 'src/app/interfaces/trex-types';
+import { RowInterface } from 'src/app/interfaces/trex-types';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPopupComponent } from '../reset-popup/reset-popup.component';
 import { take } from 'rxjs';
@@ -14,7 +14,7 @@ import { TrexService } from '../trex.service';
   styleUrls: ['./total.component.scss'],
 })
 export class TotalComponent {
-  @Input() total!: RowValueInterface;
+  @Input() total!: RowInterface;
 
   constructor(private _dialog: MatDialog, private service: TrexService) {}
 

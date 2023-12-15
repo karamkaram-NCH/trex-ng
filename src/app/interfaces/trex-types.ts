@@ -8,29 +8,20 @@ export interface TrexTypeInterface {
 }
 
 export interface RowInterface {
-  selectedOption?: TrexTypesEnum;
+  choice?: TrexTypesEnum;
+  disabled?: boolean;
   p1?: number;
   p2?: number;
   p3?: number;
   p4?: number;
 }
 
-export interface RowValueInterface {
-  p1: number;
-  p2: number;
-  p3: number;
-  p4: number;
-  total: number;
-}
-
 export interface TurnInterface {
-  options: TrexTypesEnum[];
   row1: RowInterface;
   row2: RowInterface;
   row3: RowInterface;
   row4: RowInterface;
   row5: RowInterface;
-  value: RowValueInterface;
 }
 export interface PlayersInterface {
   p1: string;
@@ -40,12 +31,10 @@ export interface PlayersInterface {
 }
 
 export interface TrexInterface {
-  players: PlayersInterface;
   turn1: TurnInterface;
   turn2: TurnInterface;
   turn3: TurnInterface;
   turn4: TurnInterface;
-  total: RowValueInterface;
 }
 
 export enum TrexTypesEnum {

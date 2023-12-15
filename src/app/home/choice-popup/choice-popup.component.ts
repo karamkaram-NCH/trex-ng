@@ -33,7 +33,6 @@ export class ChoicePopupComponent implements OnInit {
     private _dialogRef: MatDialogRef<ChoicePopupComponent>
   ) {
     this.value.valueChanges.pipe(take(1)).subscribe((v) => this.closeDialog(v));
-    console.log(this.data);
   }
 
   ngOnInit(): void {
@@ -74,15 +73,15 @@ export class ChoicePopupComponent implements OnInit {
     } else if (this.data.type === TrexTypesEnum.BANET) {
       this.label = `Select Number Of ${TrexNamesEnum.BANET}`;
       currentOpts.push(
-        { name: '1', value: 25 },
-        { name: '2', value: 50 },
-        { name: '3', value: 75 },
-        { name: '4', value: 100 }
+        { name: '1', value: -25 },
+        { name: '2', value: -50 },
+        { name: '3', value: -75 },
+        { name: '4', value: -100 }
       );
 
       const total = choosenOpts.reduce(
         (accumulator, currentValue) =>
-          currentValue ? accumulator + currentValue : 0,
+          currentValue ? Math.abs(accumulator) + Math.abs(currentValue) : 0,
         0
       );
 
@@ -94,23 +93,23 @@ export class ChoicePopupComponent implements OnInit {
     } else if (this.data.type === TrexTypesEnum.DINERE) {
       this.label = `Select Number Of ${TrexNamesEnum.DINERE}`;
       currentOpts.push(
-        { name: '1', value: 10 },
-        { name: '2', value: 20 },
-        { name: '3', value: 30 },
-        { name: '4', value: 40 },
-        { name: '5', value: 50 },
-        { name: '6', value: 60 },
-        { name: '7', value: 70 },
-        { name: '8', value: 80 },
-        { name: '9', value: 90 },
-        { name: '10', value: 100 },
-        { name: '11', value: 110 },
-        { name: '12', value: 120 },
-        { name: '13', value: 130 }
+        { name: '1', value: -10 },
+        { name: '2', value: -20 },
+        { name: '3', value: -30 },
+        { name: '4', value: -40 },
+        { name: '5', value: -50 },
+        { name: '6', value: -60 },
+        { name: '7', value: -70 },
+        { name: '8', value: -80 },
+        { name: '9', value: -90 },
+        { name: '10', value: -100 },
+        { name: '11', value: -110 },
+        { name: '12', value: -120 },
+        { name: '13', value: -130 }
       );
       const total = choosenOpts.reduce(
         (accumulator, currentValue) =>
-          currentValue ? accumulator + currentValue : 0,
+          currentValue ? Math.abs(accumulator) + Math.abs(currentValue) : 0,
         0
       );
 
@@ -122,27 +121,40 @@ export class ChoicePopupComponent implements OnInit {
     } else if (this.data.type === TrexTypesEnum.LTOUSH) {
       this.label = `Select Number Of ${TrexNamesEnum.LTOUSH}`;
       currentOpts.push(
-        { name: '1', value: 15 },
-        { name: '2', value: 30 },
-        { name: '3', value: 45 },
-        { name: '4', value: 60 },
-        { name: '5', value: 75 },
-        { name: '6', value: 90 },
-        { name: '7', value: 105 },
-        { name: '8', value: 120 },
-        { name: '9', value: 135 },
-        { name: '10', value: 150 },
-        { name: '11', value: 165 },
-        { name: '12', value: 180 },
-        { name: '13', value: 195 }
+        { name: '1', value: -15 },
+        { name: '2', value: -30 },
+        { name: '3', value: -45 },
+        { name: '4', value: -60 },
+        { name: '5', value: -75 },
+        { name: '6', value: -90 },
+        { name: '7', value: -105 },
+        { name: '8', value: -120 },
+        { name: '9', value: -135 },
+        { name: '10', value: -150 },
+        { name: '11', value: -165 },
+        { name: '12', value: -180 },
+        { name: '13', value: -195 }
       );
       const total = choosenOpts.reduce(
         (accumulator, currentValue) =>
-          currentValue ? accumulator + currentValue : 0,
+          currentValue ? Math.abs(accumulator) + Math.abs(currentValue) : 0,
         0
       );
 
       const nbOfOpts = total / 15;
+      for (let i = 0; i < nbOfOpts; i++) {
+        currentOpts.pop();
+      }
+      this.options = currentOpts;
+    } else if (this.data.type === TrexTypesEnum.KOUBBA) {
+      this.label = `Select ${TrexNamesEnum.KOUBBA}`;
+      currentOpts.push({ name: '1', value: -75 });
+      const total = choosenOpts.reduce(
+        (accumulator, currentValue) =>
+          currentValue ? Math.abs(accumulator) + Math.abs(currentValue) : 0,
+        0
+      );
+      const nbOfOpts = total / 75;
       for (let i = 0; i < nbOfOpts; i++) {
         currentOpts.pop();
       }

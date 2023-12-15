@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RowComponent } from '../row/row.component';
 import { TurnInterface } from 'src/app/interfaces/trex-types';
+import { TurnService } from './turn.service';
 
 @Component({
   selector: 'app-turn',
@@ -9,6 +10,7 @@ import { TurnInterface } from 'src/app/interfaces/trex-types';
   imports: [CommonModule, RowComponent],
   templateUrl: './turn.component.html',
   styleUrls: ['./turn.component.scss'],
+  providers: [TurnService],
 })
 export class TurnComponent {
   @Input() bgColor = 'antiquewhite';

@@ -3,36 +3,36 @@
     <div
       class="col text-center cs-col d-flex align-items-center justify-content-center border-start border-1 rounded-start border-dark px-0 cs-bg text-break cs-line"
       (click)="openDialog()"
-      [class.pointer]="!disableSelect"
+      [class.pointer]="!row.disabled"
       [class.bg-danger]="checkForRed()"
     >
-      {{ _trexService.getTurnName(choice) }}
+      {{ _turnService.getTurnName(row.choice) }}
     </div>
     <div
       class="col text-center cs-col d-flex align-items-center justify-content-center border-start border-1 border-dark px-0"
       (click)="openDataDialog(1)"
-      [class.pointer]="!disableSelect && row.selectedOption"
+      [class.pointer]="!row.disabled"
     >
       {{ row.p1 }}
     </div>
     <div
       class="col text-center cs-col d-flex align-items-center justify-content-center border-start border-1 border-dark px-0"
       (click)="openDataDialog(2)"
-      [class.pointer]="!disableSelect && row.selectedOption"
+      [class.pointer]="!row.disabled"
     >
       {{ row.p2 }}
     </div>
     <div
       class="col text-center cs-col d-flex align-items-center justify-content-center border-start border-1 border-dark px-0"
       (click)="openDataDialog(3)"
-      [class.pointer]="!disableSelect && row.selectedOption"
+      [class.pointer]="!row.disabled"
     >
       {{ row.p3 }}
     </div>
     <div
       class="col text-center cs-col d-flex align-items-center justify-content-center border-start border-end border-1 rounded-end border-dark px-0"
       (click)="openDataDialog(4)"
-      [class.pointer]="!disableSelect && row.selectedOption"
+      [class.pointer]="!row.disabled"
     >
       {{ row.p4 }}
     </div>

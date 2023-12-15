@@ -4,8 +4,9 @@ import { SelectPopupComponent } from '../select-popup/select-popup.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { take } from 'rxjs';
 import { RowInterface, TrexTypesEnum } from 'src/app/interfaces/trex-types';
-import { TrexService } from '../trex.service';
 import { ChoicePopupComponent } from '../choice-popup/choice-popup.component';
+import { TurnService } from '../turn/turn.service';
+import { TrexService } from '../trex.service';
 @Component({
   selector: 'app-row',
   standalone: true,
@@ -14,24 +15,18 @@ import { ChoicePopupComponent } from '../choice-popup/choice-popup.component';
   styleUrls: ['./row.component.scss'],
 })
 export class RowComponent implements OnInit {
+  protected _turnService = inject(TurnService);
   protected _trexService = inject(TrexService);
   @Input() public row!: RowInterface;
+  @Input() public rowNb!: 1 | 2 | 3 | 4 | 5;
   @Input() public turn!: 1 | 2 | 3 | 4;
-  public disableSelect = false;
-
-  public choice?: TrexTypesEnum;
 
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit(): void {
-    if (this.row.selectedOption) {
-      this.choice = this.row.selectedOption;
-      this.disableSelect = this.checkForRed();
-    }
-  }
+  ngOnInit(): void {}
 
-  public openDialog() {
-    if (this.disableSelect) return;
+  public async openDialog() {
+    if (this.row.disabled) return;
     this.dialog
       .open(SelectPopupComponent, {
         width: '95vw',
@@ -40,27 +35,30 @@ export class RowComponent implements OnInit {
         autoFocus: false,
         restoreFocus: false,
         disableClose: true,
-        data: this._trexService.getAvailableGameTypes(this.turn),
+        data: await this._trexService.getAvailableGameTypes(
+          this.row.choice,
+          this.turn
+        ),
       })
       .afterClosed()
       .pipe(take(1))
       .subscribe((choice?: number) => {
         if (choice) {
-          if (choice !== this.choice) {
+          if (choice !== this.row.choice) {
             this.row.p1 = undefined;
             this.row.p2 = undefined;
             this.row.p3 = undefined;
             this.row.p4 = undefined;
           }
-          this.choice = choice;
-          this.row.selectedOption = choice;
+          this.row.choice = choice;
+          this._trexService.updateGameRow(this.turn, this.rowNb, this.row);
         }
       });
   }
 
   public openDataDialog(playerNb: 1 | 2 | 3 | 4) {
-    if (this.disableSelect || !this.row.selectedOption) return;
-
+    if (!this.row.choice) return;
+    if (!this.checkForRed() && !this.row[`p${playerNb}`]) return;
     this.dialog
       .open(ChoicePopupComponent, {
         width: '95vw',
@@ -70,7 +68,7 @@ export class RowComponent implements OnInit {
         restoreFocus: false,
         disableClose: true,
         data: {
-          type: this.choice,
+          type: this.row.choice,
           row: this.row,
           playerNb,
         },
@@ -78,38 +76,65 @@ export class RowComponent implements OnInit {
       .afterClosed()
       .pipe(take(1))
       .subscribe((choice?: number) => {
-        if (choice !== undefined) {
+        if (choice !== undefined && choice !== null) {
           this.row[`p${playerNb}`] = choice;
+          let enableNext = false;
+          if (this.checkForEmpty()) {
+            enableNext = true;
+            if (!this.row.p1) {
+              this.row.p1 = 0;
+            }
+            if (!this.row.p2) {
+              this.row.p2 = 0;
+            }
+            if (!this.row.p3) {
+              this.row.p3 = 0;
+            }
+            if (!this.row.p4) {
+              this.row.p4 = 0;
+            }
+            this.row.disabled = true;
+          }
+          this._trexService.updateGameRow(
+            this.turn,
+            this.rowNb,
+            this.row,
+            enableNext
+          );
         } else if (choice === null) {
-          this.row[`p${playerNb}`] = undefined;
+          this.row[`p${playerNb}`] = 0;
+          this._trexService.updateGameRow(this.turn, this.rowNb, this.row);
         }
       });
   }
 
-  public checkForRed(): boolean {
-    if (this.row.selectedOption === TrexTypesEnum.BANET) {
-      this.disableSelect = this.calculateTotal() === 100;
-    } else if (this.row.selectedOption === TrexTypesEnum.DINERE) {
-      this.disableSelect = this.calculateTotal() === 130;
-    } else if (this.row.selectedOption === TrexTypesEnum.KOUBBA) {
-      this.disableSelect = this.calculateTotal() === 75;
-    } else if (this.row.selectedOption === TrexTypesEnum.LTOUSH) {
-      this.disableSelect = this.calculateTotal() === 195;
-    } else if (this.row.selectedOption === TrexTypesEnum.TREX) {
-      this.disableSelect = this.calculateTotal() === 500;
-    } else {
-      this.disableSelect = false;
-    }
-    return this.disableSelect;
+  private checkForEmpty(): boolean {
+    if (this.row.choice === TrexTypesEnum.BANET) {
+      return this._turnService.calculateTotal(this.row) === -100;
+    } else if (this.row.choice === TrexTypesEnum.DINERE) {
+      return this._turnService.calculateTotal(this.row) === -130;
+    } else if (this.row.choice === TrexTypesEnum.KOUBBA) {
+      return this._turnService.calculateTotal(this.row) === -75;
+    } else if (this.row.choice === TrexTypesEnum.LTOUSH) {
+      return this._turnService.calculateTotal(this.row) === -195;
+    } else if (this.row.choice === TrexTypesEnum.TREX) {
+      return this._turnService.calculateTotal(this.row) === 500;
+    } else return false;
   }
 
-  private calculateTotal() {
-    let total = 0;
-    total += this.row.p1 ?? 0;
-    total += this.row.p2 ?? 0;
-    total += this.row.p3 ?? 0;
-    total += this.row.p4 ?? 0;
-    console.log(this.disableSelect);
-    return total;
+  public checkForRed(): boolean {
+    if (this.row.choice === TrexTypesEnum.BANET) {
+      return this._turnService.calculateTotal(this.row) !== -100;
+    } else if (this.row.choice === TrexTypesEnum.DINERE) {
+      return this._turnService.calculateTotal(this.row) !== -130;
+    } else if (this.row.choice === TrexTypesEnum.KOUBBA) {
+      return this._turnService.calculateTotal(this.row) !== -75;
+    } else if (this.row.choice === TrexTypesEnum.LTOUSH) {
+      return this._turnService.calculateTotal(this.row) !== -195;
+    } else if (this.row.choice === TrexTypesEnum.TREX) {
+      return this._turnService.calculateTotal(this.row) !== 500;
+    } else {
+      return false;
+    }
   }
 }
