@@ -1,0 +1,20 @@
+<div class="dialog-container p-3">
+  <div class="h4 d-flex align-items-center justify-content-center mb-3">
+    Choose Game
+  </div>
+  <div *ngFor="let opt of options" class="text-center my-2">
+    <button
+      class="w-75"
+      mat-raised-button
+      color="primary"
+      (click)="closeDialog(opt.value)"
+    >
+      {{ opt.name }}
+    </button>
+  </div>
+  <div class="text-center my-2">
+    <button class="w-75" mat-raised-button color="warn" (click)="closeDialog()">
+      Cancel
+    </button>
+  </div>
+</div>

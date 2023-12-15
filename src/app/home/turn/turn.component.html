@@ -1,0 +1,35 @@
+<section
+  class="container container-fuild border border-2 border-dark rounded-2"
+  [style.background-color]="bgColor"
+>
+  <div class="row p-1">
+    <div
+      class="col-1 px-0 text-center aside d-flex align-items-center justify-content-center p-1"
+    >
+      <p class="text-break fw-bold">{{ playerName }}</p>
+    </div>
+    <div class="col-11 px-0">
+      <div class="container container-fluid">
+        <div class="row">
+          <div class="col-12 px-0 border-top border-1 border-dark rounded-top">
+            <app-row [row]="turn.row1" [turn]="turnNb"></app-row>
+          </div>
+          <div class="col-12 px-0 border-top border-1 border-dark rounded-top">
+            <app-row [row]="turn.row2" [turn]="turnNb"></app-row>
+          </div>
+          <div class="col-12 px-0 border-top border-1 border-dark rounded-top">
+            <app-row [row]="turn.row3" [turn]="turnNb"></app-row>
+          </div>
+          <div class="col-12 px-0 border-top border-1 border-dark rounded-top">
+            <app-row [row]="turn.row4" [turn]="turnNb"></app-row>
+          </div>
+          <div
+            class="col-12 px-0 border-top border-bottom border-1 border-dark rounded-bottom rounded-top"
+          >
+            <app-row [row]="turn.row5" [turn]="turnNb"></app-row>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

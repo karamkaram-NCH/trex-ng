@@ -1,0 +1,33 @@
+<div class="dialog-container p-3">
+  <div class="h5 d-flex align-items-center justify-content-center mb-3">
+    {{ label }}
+  </div>
+  <div
+    class="mt-2 mb-3 d-flex align-items-center justify-content-center gap-2 flex-wrap"
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      *ngFor="let opt of options"
+      (click)="value.setValue(opt.value)"
+    >
+      {{ opt.name }}
+    </button>
+  </div>
+  <div
+    class="text-center d-flex align-items-center justify-content-center gap-2"
+  >
+    <button
+      class="w-75"
+      mat-raised-button
+      color="primary"
+      (click)="value.setValue(null)"
+    >
+      Clear
+    </button>
+
+    <button class="w-75" mat-raised-button color="warn" (click)="closeDialog()">
+      Cancel
+    </button>
+  </div>
+</div>

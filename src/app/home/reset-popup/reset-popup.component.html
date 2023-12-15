@@ -1,0 +1,32 @@
+<div class="dialog-container p-3">
+  <div class="h5 d-flex align-items-center justify-content-center mb-3">
+    Reset Game
+  </div>
+
+  <form [formGroup]="form" class="mt-2 mb-3 d-grid gap-2" autocomplete="off">
+    <mat-checkbox [color]="'primary'" formControlName="players"
+      >Clear Players Names</mat-checkbox
+    >
+  </form>
+
+  <div
+    class="text-center my-2 d-flex justify-content-center align-items-center gap-2"
+  >
+    <button
+      class="w-100"
+      mat-raised-button
+      color="primary"
+      (click)="closeDialog()"
+    >
+      Cancel
+    </button>
+    <button
+      class="w-100"
+      mat-raised-button
+      color="warn"
+      (click)="closeDialog()"
+    >
+      Reset
+    </button>
+  </div>
+</div>

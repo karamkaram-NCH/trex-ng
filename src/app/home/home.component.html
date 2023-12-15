@@ -1,0 +1,46 @@
+<div id="home-container">
+  <div class="m-1 m-sm-3">
+    <div
+      class="game-container container-fluid mx-auto rounded rounded-2 p-2 border border-2 border-dark"
+    >
+      <div class="row gap-2 position-relative">
+        <div class="col-12 position-sticky top-0">
+          <app-players [players]="players"></app-players>
+        </div>
+        <div class="col-12">
+          <app-turn
+            [turn]="game.turn1"
+            [turnNb]="1"
+            [playerName]="players.p1 ? players.p1 : 'Player 1'"
+          ></app-turn>
+        </div>
+        <div class="col-12">
+          <app-turn
+            [turn]="game.turn2"
+            [turnNb]="2"
+            [bgColor]="'aliceblue'"
+            [playerName]="players.p2 ? players.p2 : 'Player 2'"
+          ></app-turn>
+        </div>
+        <div class="col-12">
+          <app-turn
+            [turn]="game.turn3"
+            [turnNb]="3"
+            [playerName]="players.p3 ? players.p3 : 'Player 3'"
+          ></app-turn>
+        </div>
+        <div class="col-12">
+          <app-turn
+            [turn]="game.turn4"
+            [turnNb]="4"
+            [bgColor]="'aliceblue'"
+            [playerName]="players.p4 ? players.p4 : 'Player 4'"
+          ></app-turn>
+        </div>
+        <div class="col-12">
+          <app-total [total]="game.total"></app-total>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

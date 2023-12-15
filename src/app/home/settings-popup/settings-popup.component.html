@@ -1,0 +1,43 @@
+<div class="dialog-container p-3">
+  <div class="h5 d-flex align-items-center justify-content-center mb-3">
+    Players
+  </div>
+  <form [formGroup]="form" class="mt-2 mb-3 d-grid gap-2" autocomplete="off">
+    <mat-form-field appearance="outline">
+      <mat-label>Player 1</mat-label>
+      <input formControlName="p1" type="text" matInput />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Player 2</mat-label>
+      <input formControlName="p2" type="text" matInput />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Player 3</mat-label>
+      <input formControlName="p3" type="text" matInput />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Player 4</mat-label>
+      <input formControlName="p4" type="text" matInput />
+    </mat-form-field>
+  </form>
+  <div
+    class="text-center my-2 d-flex justify-content-center align-items-center gap-2"
+  >
+    <button
+      class="w-100"
+      mat-raised-button
+      color="warn"
+      (click)="closeDialog()"
+    >
+      Cancel
+    </button>
+    <button
+      class="w-100"
+      mat-raised-button
+      color="primary"
+      (click)="closeDialog(true)"
+    >
+      Save
+    </button>
+  </div>
+</div>

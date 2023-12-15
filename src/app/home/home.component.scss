@@ -1,0 +1,15 @@
+#home-container {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.game-container {
+  background-color: darkgrey;
+  max-width: 500px;
+  margin: auto;
+}
+
+* {
+  user-select: none;
+}

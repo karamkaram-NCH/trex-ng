@@ -1,0 +1,11 @@
+.aside {
+  text-orientation: sideways;
+  writing-mode: vertical-lr;
+  overflow: hidden;
+  max-height: 130px;
+  p {
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    max-height: 120px;
+  }
+}
